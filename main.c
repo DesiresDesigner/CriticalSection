@@ -34,8 +34,7 @@ FILE *pipes_log_fd, *events_log_fd;
 timestamp_t lamport_time[MAX_PROCESS_ID + 2];
 int mutexl = 0;
 
-queue_t* last;
-queue_t* first;
+queue_t* first = NULL;
 
 static const char* const open_pipe = "Process %5d number %2d has opened the descriptor %2d\n";
 static const char* const close_pipe = "Process %5d number %2d has closed the descriptor %2d\n";
@@ -87,47 +86,79 @@ void check_recv(MessageHeader* msg_h)
 	//printf("new lamport is %d from %d\n", lamport_time[local_pid], local_pid);
 }
 
-void execute_critical()
+int execute_critical()
 {
 	int M = local_pid * 5;
-	char buf[256];
+//	char buf[256];
+	int done_counter = 0;
 	//static const char * const log_loop_operation_fmt =
    // "process %1d is doing %d iteration out of %d\n";
 	for(int i = 1; i <= M; i++)
 	{
-		sprintf(buf, log_loop_operation_fmt, local_pid, i, M);
-		print(buf);
+		char* bufd = (char*)malloc((strlen(log_loop_operation_fmt) + 1) * sizeof(char));
+
+		sprintf(bufd, log_loop_operation_fmt, local_pid, i, M);
+		if(mutexl)
+			done_counter += request_cs((void*)&pipes);
+
+		printf("Here is the critical sec of %d\n", local_pid);
+		//print(bufd);
+
+		if(mutexl)
+			release_cs((void*)pipes);
 	}
+	return done_counter;
 }
 
 int compare(queue_t* first, queue_t* second)
 {
-	return (first->time > second->time) ? 1 : (first->time < second-> time ? -1 : (first->id > second->id ? 1 : (first->id < second->id ? -1 : 0)));
+	if(first == NULL || second == NULL)
+		return -2;
+
+	return (first->time > second->time) ? 1 : (first->time < second-> time ? -1 : (first->process_id > second->process_id ? 1 : 
+		(first->process_id < second->process_id ? -1 : 0)));
 }
 queue_t* insert(timestamp_t time, local_id pid)
 {
-	queue_t* node = (queue_t*)malloc(sizeof(queue_t)), tmp;
+	queue_t *node = (queue_t*)malloc(sizeof(queue_t)), *tmp;
 
 	node->time = time;
 	node->process_id = pid;
+	node->next = NULL;
+
+	if(first == NULL)
+	{
+		first = node;
+		return node;
+	}
+	
 	tmp = first;
+
+
+	printf("try to insert in %d\n", local_pid);
+	
 	if (compare(first, node)) {
+
+		printf("compare is on first (%d)\n", local_pid);
 		node->next = first;
 		first = node;
+		printf("On first before return (%d)\n", local_pid);
 		return node;
 	}
 	while(tmp->next != NULL || compare(node, tmp->next))
 		tmp = tmp->next;
-
-	gueue_t* next = tmp->next;
+	
+	printf("while is ended (%d)\n", local_pid);
+	queue_t* next = tmp->next;
 	tmp->next = node;
 	node->next = next;
+	printf("new node is %d proc %d time\n", node->process_id, node->time);
 	return node;
 }
 
 int delete(queue_t* element)
 {
-	queue_t *prev = *tmp = first;
+	queue_t *prev = first, *tmp = first;
 	
 	if (!compare(first, element)) {
 		first = first->next;
@@ -147,6 +178,17 @@ int delete(queue_t* element)
 	return 0;
 }
 
+void print_queue()
+{
+	queue_t* tmp = first;
+	printf("=========== queue ==============\n");
+	while(tmp != NULL)
+	{
+		printf("proc id %d and time %d\n", tmp->process_id, tmp->time);
+		tmp = tmp->next;
+	}
+	printf("=============end queue ============\n");
+}
 int request_cs(const void* self)
 {
 	Message msg;
@@ -161,22 +203,28 @@ int request_cs(const void* self)
 	msg.s_header.s_type =  CS_REQUEST;
 	msg.s_header.s_local_time = get_lamport_time();
 
-	int request_timestamp = msg.s_header.s_local_time;
+	//int request_timestamp = msg.s_header.s_local_time;
+	int done_cnt = 0;
 
-	send_multicast((void*)self, &msg);
+	send_multicast((void*)&pipes, &msg);
 	int requests_got = N - 1;
 	
 	insert(msg.s_header.s_local_time, local_pid);
-
-	while(requests_got != 0)
+	print_queue();
+	//int time_flag = 1;
+	while(1)
 	{
-		int rez = receive_any((void*)&pipes, &msg);
 
+		int rez = receive_any((void*)&pipes, &msg);
+		//printf("%d received from %d with type %d\n", local_pid, rez, msg.s_header.s_type );
 		check_recv(&msg.s_header);
 
 		if(msg.s_header.s_type == CS_REQUEST)
 		{
-			insert(msg.s_header.s_local_time,  local_pid);
+			printf("%d received REQUEST from %d\n", local_pid, rez);
+			queue_t* node = insert(msg.s_header.s_local_time,  local_pid);
+			printf("inserted %d proc id %d time (%d)\n", node->process_id, node->time, local_pid);
+			print_queue();
 
 			lamport_time[local_pid]++;
 
@@ -186,18 +234,35 @@ int request_cs(const void* self)
 			msg.s_header.s_local_time = get_lamport_time();
 			
 			if(rez != -1) 
-				send(&pipes, rez, &msg);
+				send((void*)&pipes, rez, &msg);
+			printf("%d sent REPLY to %d\n", local_pid, rez);
 		}
 		else if(msg.s_header.s_type == CS_REPLY)
 		{
+			printf("%d received REPLY from %d\n", local_pid, rez);
 			requests_got--;
 			printf("REPLY from %d got, requests count is %d\n", rez, requests_got);
-			if(msg.s_header.s_local_time <= request_timestamp)
-				return -1;
+			//if(msg.s_header.s_local_time <= request_timestamp)
+			//	time_flag = 0;
 		}
+		else if (msg.s_header.s_type == CS_RELEASE)
+		{
+			printf("%d received RELEASE from %d\n", local_pid, rez);
+			queue_t* element = (queue_t*)malloc(sizeof(queue_t));
+			element->time = msg.s_header.s_local_time;
+			element->process_id = rez;
+			delete(element);
+		}
+		else if (msg.s_header.s_type == DONE)
+		{
+			printf("%d received REQUEST from %d IN REQUEST\n", local_pid, rez);
+			done_cnt++;
+		}
+		if (requests_got == 0 && first->process_id == local_pid)
+			break;
 	}
 
-	return first->process_id == local_pid ? 0 : -1;
+	return  done_cnt;
 }
 
 queue_t* queue_search(queue_t* root, int process_id)
@@ -212,11 +277,16 @@ queue_t* queue_search(queue_t* root, int process_id)
 int release_cs(const void* self)
 {
 	Message msg;
-	first = first->next;
-	free(first->prev);
+	queue_t* element = (queue_t*)malloc(sizeof(queue_t));
+
 
 	lamport_time[local_pid]++;
 	
+	element->time = get_lamport_time();
+	element->process_id = local_pid;
+	delete(element);
+
+	printf("Release %d\n", local_pid);
 	msg.s_header.s_magic = MESSAGE_MAGIC;
 	msg.s_header.s_payload_len = 0;
 	msg.s_header.s_type =  CS_RELEASE;
@@ -225,22 +295,6 @@ int release_cs(const void* self)
 	//int request_timestamp = msg.s_header.s_local_time;
 
 	send_multicast((void*)self, &msg);
-
-	//try to receive
-	int rez = receive_any((void*)&pipes, &msg);
-	
-	check_recv(&msg.s_header);
-
-	if(rez != -1)
-	{
-		queue_t* node = queue_search(first, rez);
-	//	if(node->prev != NULL)
-	//		node->prev->next = node->next;
-	//	if(node->next != NULL)	
-		//	node->next->prev = node->prev;
-		free(node);
-	}
-	else return -1;
 
 	return 0;
 }
@@ -252,7 +306,7 @@ int child()
 	Message msg;
 	MessageHeader msg_h;
 	char buf[256];
-	
+//	first = (queue_t*)malloc(sizeof(queue_t));
 	//timestamp_t time_a = 0;
 
 	fprintf(events_log_fd, log_started_fmt, get_lamport_time(), local_pid, pid, parent,0);
@@ -294,19 +348,8 @@ int child()
 
 	//received all STARTED messages
 	//work begins here
+	int done_counter = execute_critical();
 	
-	if(mutexl)
-	{
-		if(request_cs((void*)&pipes) != -1)
-		{
-			execute_critical();
-			release_cs((void*)&pipes);
-		}
-	
-		
-	}
-	else execute_critical();
-
 	//work ends here
 	lamport_time[local_pid]++;
 
@@ -326,14 +369,38 @@ int child()
 
 	assert(send_multicast((void*)&pipes, &msg) != 0 ? 0 : 1, "Error while sending multicast DONE messages\n");
 
-	for(i = 1; i < N + 1; i++)
-		if(i != local_pid)
-			{
-				int rez = -1;
-				while(rez == -1)
-					rez = receive((void*)pipes, i,  &msg);
-				check_recv(&msg.s_header);
-			}
+	while(done_counter < N - 1)
+	{
+	    receive_any((void*)pipes, &msg);
+
+		check_recv(&msg.s_header);
+
+		if(msg.s_header.s_type == DONE)
+		{
+			done_counter++;
+			//printf("%d received DONE from %d, DONE COUNTER is %d\n", local_pid, rez, done_counter);
+			
+		}
+		else if (msg.s_header.s_type == CS_REQUEST)
+		{
+			lamport_time[local_pid]++;
+
+			msg.s_header.s_magic = MESSAGE_MAGIC;
+			msg.s_header.s_payload_len = 0;
+			msg.s_header.s_type =  CS_REPLY;
+			msg.s_header.s_local_time = get_lamport_time();
+
+			send((void*)pipes, local_pid, &msg);
+		}
+	}
+	//for(i = 1; i < N + 1; i++)
+	//	if(i != local_pid)
+		//	{
+			//	int rez = -1;
+			//	while(rez == -1)
+				//	rez = receive((void*)pipes, i,  &msg);
+			//	check_recv(&msg.s_header);
+			//}
 //printf("%d've received %s\n", local_pid,msg.s_payload);
 
 	
@@ -352,11 +419,13 @@ int child()
 int send(void * self, local_id dst, const Message * msg) {
 	
 	int fd, rez = 0;
+	//printf("%d tries to send to %d\n", local_pid, dst);
+
 	fd = (*(connections*)self)[local_pid][dst][1];
 	//printf("Process %d sends to %d\n",local_pid, dst);
 	
 		rez = write(fd, (void*)msg, (sizeof(msg->s_header)) + sizeof(char)*(msg->s_header.s_payload_len));
-
+  printf("%d sent to %d, result is %d\n", local_pid, dst, rez);
 	return rez > 0 ? 0 : rez;
 }
 
@@ -450,8 +519,8 @@ int main(int argc, char ** argv)
 	pid_t pids[N + 1];
 	Message msg;
 
-	first = (queue_t*)malloc(sizeof(queue_t));
-	last = first;
+	
+	
 
 	pid = getpid();
 	parent = pid;
@@ -565,6 +634,7 @@ int main(int argc, char ** argv)
 		while(receive((void*)pipes, k, &msg) == -1);
 		check_recv(&msg.s_header);
 		//printf("Time of %d process: %d\n", k, msg.s_header.s_local_time);
+		if(msg.s_header.s_type == STARTED)
 		k++;
 	}
 	//all started messages received
@@ -593,6 +663,7 @@ int main(int argc, char ** argv)
 	{
 		while(receive((void*)pipes, k, &msg) == -1);
 		check_recv(&msg.s_header);
+		if(msg.s_header.s_type == DONE)
 		k++;
 	}
 	//all DONE messages have been received

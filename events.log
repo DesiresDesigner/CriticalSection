@@ -1,0 +1,243 @@
+0: process 1 (pid 28042, parent 28041) has STARTED with balance $ 0
+0: process 2 (pid 28043, parent 28041) has STARTED with balance $ 0
+0: process 3 (pid 28044, parent 28041) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+4: process 1 has DONE with balance $ 0
+4: process 2 has DONE with balance $ 0
+4: process 3 has DONE with balance $ 0
+7: process 0 received all DONE messages
+0: process 1 (pid 28056, parent 28055) has STARTED with balance $ 0
+0: process 2 (pid 28057, parent 28055) has STARTED with balance $ 0
+0: process 3 (pid 28058, parent 28055) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+4: process 1 has DONE with balance $ 0
+4: process 2 has DONE with balance $ 0
+4: process 3 has DONE with balance $ 0
+7: process 0 received all DONE messages
+0: process 1 (pid 28071, parent 28070) has STARTED with balance $ 0
+0: process 2 (pid 28072, parent 28070) has STARTED with balance $ 0
+0: process 3 (pid 28073, parent 28070) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+4: process 1 has DONE with balance $ 0
+4: process 2 has DONE with balance $ 0
+4: process 3 has DONE with balance $ 0
+7: process 0 received all DONE messages
+0: process 1 (pid 28085, parent 28084) has STARTED with balance $ 0
+0: process 2 (pid 28086, parent 28084) has STARTED with balance $ 0
+0: process 3 (pid 28087, parent 28084) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+4: process 1 has DONE with balance $ 0
+4: process 2 has DONE with balance $ 0
+4: process 3 has DONE with balance $ 0
+7: process 0 received all DONE messages
+6: process 1 received all DONE messages
+6: process 2 received all DONE messages
+6: process 3 received all DONE messages
+0: process 1 (pid 28105, parent 28104) has STARTED with balance $ 0
+0: process 2 (pid 28106, parent 28104) has STARTED with balance $ 0
+0: process 3 (pid 28107, parent 28104) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+14: process 1 has DONE with balance $ 0
+24: process 2 has DONE with balance $ 0
+34: process 3 has DONE with balance $ 0
+91: process 1 received all DONE messages
+86: process 2 received all DONE messages
+81: process 3 received all DONE messages
+0: process 1 (pid 28156, parent 28155) has STARTED with balance $ 0
+0: process 2 (pid 28157, parent 28155) has STARTED with balance $ 0
+0: process 3 (pid 28158, parent 28155) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+14: process 1 has DONE with balance $ 0
+24: process 2 has DONE with balance $ 0
+34: process 3 has DONE with balance $ 0
+91: process 1 received all DONE messages
+86: process 2 received all DONE messages
+81: process 3 received all DONE messages
+0: process 1 (pid 28171, parent 28170) has STARTED with balance $ 0
+0: process 2 (pid 28172, parent 28170) has STARTED with balance $ 0
+0: process 3 (pid 28173, parent 28170) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+14: process 1 has DONE with balance $ 0
+24: process 2 has DONE with balance $ 0
+34: process 3 has DONE with balance $ 0
+91: process 1 received all DONE messages
+86: process 2 received all DONE messages
+81: process 3 received all DONE messages
+0: process 1 (pid 28198, parent 28197) has STARTED with balance $ 0
+0: process 2 (pid 28199, parent 28197) has STARTED with balance $ 0
+0: process 3 (pid 28200, parent 28197) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+14: process 1 has DONE with balance $ 0
+24: process 2 has DONE with balance $ 0
+34: process 3 has DONE with balance $ 0
+91: process 1 received all DONE messages
+86: process 2 received all DONE messages
+81: process 3 received all DONE messages
+0: process 1 (pid 28251, parent 28250) has STARTED with balance $ 0
+0: process 3 (pid 28253, parent 28250) has STARTED with balance $ 0
+0: process 2 (pid 28252, parent 28250) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+14: process 1 has DONE with balance $ 0
+24: process 2 has DONE with balance $ 0
+34: process 3 has DONE with balance $ 0
+91: process 1 received all DONE messages
+86: process 2 received all DONE messages
+81: process 3 received all DONE messages
+0: process 1 (pid 28364, parent 28363) has STARTED with balance $ 0
+0: process 2 (pid 28365, parent 28363) has STARTED with balance $ 0
+0: process 3 (pid 28366, parent 28363) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28411, parent 28410) has STARTED with balance $ 0
+0: process 3 (pid 28413, parent 28410) has STARTED with balance $ 0
+0: process 2 (pid 28412, parent 28410) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 3 received all STARTED messages
+3: process 2 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28441, parent 28440) has STARTED with balance $ 0
+0: process 2 (pid 28442, parent 28440) has STARTED with balance $ 0
+0: process 3 (pid 28443, parent 28440) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28543, parent 28542) has STARTED with balance $ 0
+0: process 2 (pid 28544, parent 28542) has STARTED with balance $ 0
+0: process 3 (pid 28545, parent 28542) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28560, parent 28559) has STARTED with balance $ 0
+0: process 2 (pid 28561, parent 28559) has STARTED with balance $ 0
+0: process 3 (pid 28562, parent 28559) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28642, parent 28641) has STARTED with balance $ 0
+0: process 2 (pid 28643, parent 28641) has STARTED with balance $ 0
+0: process 3 (pid 28644, parent 28641) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28685, parent 28684) has STARTED with balance $ 0
+0: process 3 (pid 28687, parent 28684) has STARTED with balance $ 0
+0: process 2 (pid 28686, parent 28684) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 3 received all STARTED messages
+3: process 2 received all STARTED messages
+7: process 0 received all DONE messages
+0: process 1 (pid 28707, parent 28706) has STARTED with balance $ 0
+0: process 2 (pid 28708, parent 28706) has STARTED with balance $ 0
+0: process 3 (pid 28709, parent 28706) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28738, parent 28737) has STARTED with balance $ 0
+0: process 2 (pid 28739, parent 28737) has STARTED with balance $ 0
+0: process 3 (pid 28740, parent 28737) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28764, parent 28763) has STARTED with balance $ 0
+0: process 2 (pid 28765, parent 28763) has STARTED with balance $ 0
+0: process 3 (pid 28766, parent 28763) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28788, parent 28787) has STARTED with balance $ 0
+0: process 2 (pid 28789, parent 28787) has STARTED with balance $ 0
+0: process 3 (pid 28790, parent 28787) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28806, parent 28805) has STARTED with balance $ 0
+0: process 2 (pid 28807, parent 28805) has STARTED with balance $ 0
+0: process 3 (pid 28808, parent 28805) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28817, parent 28816) has STARTED with balance $ 0
+0: process 3 (pid 28819, parent 28816) has STARTED with balance $ 0
+0: process 2 (pid 28818, parent 28816) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28838, parent 28837) has STARTED with balance $ 0
+0: process 2 (pid 28839, parent 28837) has STARTED with balance $ 0
+0: process 3 (pid 28840, parent 28837) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28873, parent 28872) has STARTED with balance $ 0
+0: process 2 (pid 28874, parent 28872) has STARTED with balance $ 0
+0: process 3 (pid 28875, parent 28872) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28880, parent 28879) has STARTED with balance $ 0
+0: process 2 (pid 28881, parent 28879) has STARTED with balance $ 0
+0: process 3 (pid 28882, parent 28879) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
+0: process 1 (pid 28921, parent 28920) has STARTED with balance $ 0
+0: process 2 (pid 28922, parent 28920) has STARTED with balance $ 0
+0: process 3 (pid 28923, parent 28920) has STARTED with balance $ 0
+4: process 0 received all STARTED messages
+3: process 1 received all STARTED messages
+3: process 2 received all STARTED messages
+3: process 3 received all STARTED messages
